@@ -2,6 +2,8 @@
 
 Public, read-only Azure cost estimator built on Next.js (App Router) and deployed on Vercel. Prices come live from the public [Azure Retail Prices API](https://learn.microsoft.com/rest/api/cost-management/retail-prices/azure-retail-prices). No Azure account needed.
 
+**Live:** https://azure-cost-estimator-three.vercel.app · MCP: `https://azure-cost-estimator-three.vercel.app/api/mcp`
+
 - **Web UI** (`/`): drag-and-drop `.xlsx`/`.csv` BOM, discount %, currency (GBP default, USD/EUR), per-row results with PAYG / Spot / RI 1Y / RI 3Y / Savings Plan 1Y / 3Y, chosen option month/year, saving vs PAYG, totals, export to `.xlsx`.
 - **Template**: `/template.xlsx` (blank) and `/sample.xlsx` (example rows).
 - **REST API**: `POST /api/estimate`
@@ -37,7 +39,7 @@ Public, read-only Azure cost estimator built on Next.js (App Router) and deploye
 ## REST
 
 ```bash
-curl -s https://<host>/api/estimate -H 'content-type: application/json' -d '{
+curl -s https://azure-cost-estimator-three.vercel.app/api/estimate -H 'content-type: application/json' -d '{
   "currency":"GBP","discount_pct":0,
   "rows":[{"name":"web","service":"VM","arm_sku":"Standard_D4s_v5","region":"uksouth","quantity":2,"os":"Linux","pricing":"RI3Y"}]
 }'
@@ -52,12 +54,12 @@ Cursor (`~/.cursor/mcp.json`) or VS Code (`.vscode/mcp.json`, use `"servers"` in
 ```json
 {
   "mcpServers": {
-    "azure-cost-estimator": { "url": "https://azure-cost-estimator.vercel.app/api/mcp" }
+    "azure-cost-estimator": { "url": "https://azure-cost-estimator-three.vercel.app/api/mcp" }
   }
 }
 ```
 
-Clients that only support stdio: `npx mcp-remote https://azure-cost-estimator.vercel.app/api/mcp`.
+Clients that only support stdio: `npx mcp-remote https://azure-cost-estimator-three.vercel.app/api/mcp`.
 
 ## Develop
 
