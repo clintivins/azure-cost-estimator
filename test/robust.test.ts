@@ -25,13 +25,13 @@ describe("Other meter selection", () => {
 });
 
 describe("estimateRows resilience", () => {
-  it("treats a full service name as Other and filters on serviceName", async () => {
+  it("treats an uncatalogued service name as Other and filters on serviceName", async () => {
     const urls: string[] = [];
-    vi.stubGlobal("fetch", vi.fn(async (u: string) => { urls.push(new URL(u).searchParams.get("$filter") ?? ""); return ok([item({ serviceName: "API Management", meterName: "Standard v2 Unit", retailPrice: 1 })]); }));
-    const r = await estimateRows([{ name: "apim", service: "API Management", arm_sku: "Standard v2", region: "UK South", quantity: 2 }], "GBP", 0, 6, 5_000);
+    vi.stubGlobal("fetch", vi.fn(async (u: string) => { urls.push(new URL(u).searchParams.get("$filter") ?? ""); return ok([item({ serviceName: "SignalR", meterName: "Standard v2 Unit", retailPrice: 1 })]); }));
+    const r = await estimateRows([{ name: "sig", service: "SignalR", arm_sku: "Standard v2", region: "UK South", quantity: 2 }], "GBP", 0, 6, 5_000);
     expect(r.rows[0].status).toBe("WARN");
     expect(r.rows[0].payg_month).toBe(1460);
-    expect(urls.some((u) => u.includes("serviceName eq 'API Management'"))).toBe(true);
+    expect(urls.some((u) => u.includes("serviceName eq 'SignalR'"))).toBe(true);
   });
 
   it("returns per-row ERRORs instead of hanging when the prices API never answers", async () => {
@@ -91,10 +91,10 @@ describe("Other ambiguity", () => {
   });
   it("with service_name, prefers the cheaper of equally scored meters over a dedicated HSM", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => ok([
-      item({ serviceName: "Key Vault", productName: "Azure Dedicated HSM", meterName: "Standard Instance", retailPrice: 3.6 }),
-      item({ serviceName: "Key Vault", productName: "Key Vault", meterName: "Operations", unitOfMeasure: "10K", retailPrice: 0.02 }),
+      item({ serviceName: "Key Vault HSMish", productName: "Azure Dedicated HSM", meterName: "Standard Instance", retailPrice: 3.6 }),
+      item({ serviceName: "Key Vault HSMish", productName: "Key Vault HSMish", meterName: "Operations", unitOfMeasure: "10K", retailPrice: 0.02 }),
     ])));
-    const r = await estimateRows([{ service: "Other", service_name: "Key Vault", arm_sku: "StandardKV", region: "uksouth" }], "GBP", 0, 6, 5_000);
-    expect(r.rows[0].message).toMatch(/Key Vault \/ Operations/);
+    const r = await estimateRows([{ service: "Other", service_name: "Key Vault HSMish", arm_sku: "StandardKV", region: "uksouth" }], "GBP", 0, 6, 5_000);
+    expect(r.rows[0].message).toMatch(/Key Vault HSMish \/ Operations/);
   });
 });
