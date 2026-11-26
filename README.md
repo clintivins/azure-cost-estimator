@@ -23,6 +23,8 @@ Public, read-only Azure cost estimator built on Next.js (App Router) and deploye
 | pricing | `PAYG` \| `RI1Y` \| `RI3Y` \| `SP1Y` \| `SP3Y` \| `Spot` |
 | ahb | `yes`/`no` – Azure Hybrid Benefit, uses the Linux compute meter |
 | aks_tier | `Free` \| `Standard` \| `Premium` (AKS rows) |
+| service_name | optional, Other rows: Azure `serviceName` to narrow the match, e.g. `API Management`, `Service Bus` |
+| meter | optional, Other rows: part of the meter name, e.g. `Unit`, `Messaging Unit` |
 
 ## Pricing rules
 
@@ -32,9 +34,9 @@ Public, read-only Azure cost estimator built on Next.js (App Router) and deploye
 - Windows RI/SP = Linux compute rate + Windows licence (Windows PAYG − Linux PAYG) per hour, unless AHB.
 - AKS: node VM cost × nodes + cluster fee from `serviceName 'Azure Kubernetes Service'`: Free = 0, Standard = "Standard Uptime SLA", Premium = "Standard Uptime SLA" + "Standard Long Term Support" (per cluster-hour × hours_per_month). Tier fee is not reservation-discounted.
 - Disks: `serviceName 'Storage'`, product contains "Managed Disks", `skuName 'P10 LRS'`, meter "… Disk", unit `1/Month`. Only PAYG (other options fall back with WARN).
-- Other: best-effort match on `armSkuName`/`skuName` in region (always WARN, verify).
+- Other: best-effort match on `armSkuName`/`skuName` in region, narrowed by `service_name` and `meter` when given; billable hourly/monthly capacity meters are preferred over add-on meters (always WARN, verify). A `service` value that is not VM/AKS/Disk/Other (e.g. `API Management`) is treated as Other with that service name. Region `global` is allowed for Other rows.
 - Validation: missing fields, unknown service/pricing, unknown region, SKU not found → ERROR; option not offered → WARN and PAYG fallback.
-- Discount % is applied to every option. Lookups are cached in memory (6h) and deduped; 429/5xx retried with backoff; responses send `Cache-Control`.
+- Discount % is applied to every option. Lookups are cached in memory (6h) and deduped; 429/5xx/timeouts retried with capped backoff (10 s per call, max 4 concurrent calls per instance); a 45 s overall deadline returns unfinished rows as ERROR so the API always answers with JSON; responses send `Cache-Control`.
 
 ## REST
 

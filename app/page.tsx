@@ -34,11 +34,24 @@ export default function Home() {
   const run = async () => {
     setBusy(true); setErr("");
     try {
-      const res = await fetch("/api/estimate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ rows, currency, discount_pct: discount }) });
-      const j = await res.json();
-      if (!res.ok) throw new Error(j.error ?? res.statusText);
+      const res = await fetch("/api/estimate", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ rows, currency, discount_pct: discount }), signal: AbortSignal.timeout(90_000),
+      });
+      const text = await res.text();
+      let j: any;
+      // The platform can answer with a plain-text error page (e.g. a timeout), so never assume JSON.
+      try { j = JSON.parse(text); } catch {
+        const timeout = res.status === 504 || /TIMEOUT/i.test(text);
+        throw new Error(timeout
+          ? "The estimate timed out on the server. Please try again in a minute; if it keeps happening, split the file into smaller batches."
+          : `The server returned an unexpected response (HTTP ${res.status}). Please try again. ${text.replace(/\s+/g, " ").slice(0, 160)}`);
+      }
+      if (!res.ok) throw new Error(j?.error ?? `HTTP ${res.status} ${res.statusText}`);
       setResult(j);
-    } catch (e: any) { setErr(e.message); } finally { setBusy(false); }
+    } catch (e: any) {
+      setErr(e?.name === "TimeoutError" ? "No response from the server after 90 seconds. Please try again." : e?.message ?? String(e));
+    } finally { setBusy(false); }
   };
 
   const exportXlsx = () => {
@@ -70,6 +83,7 @@ export default function Home() {
           {result && <button className="sec" onClick={exportXlsx}>Export .xlsx</button>}
         </div>
         {err && <p className="err">{err}</p>}
+        {result?.warning && <p className="err">{result.warning}</p>}
       </div>
       {result && (
         <div className="card scroll">

@@ -30,18 +30,19 @@ const handler = createMcpHandler(
     );
     server.tool(
       "estimate_bom",
-      "Estimate a bill of materials. Each row: name, service (VM|AKS|Disk|Other), arm_sku, region, quantity, hours_per_month, os, pricing, ahb, aks_tier. Max 200 rows.",
+      "Estimate a bill of materials. Each row: name, service (VM|AKS|Disk|Other, or an Azure service name such as 'API Management'), arm_sku, region, quantity, hours_per_month, os, pricing, ahb, aks_tier, service_name and meter (optional, narrow Other lookups). Max 200 rows. Rows that cannot be priced come back as ERROR rows, not a failed call.",
       {
         rows: z.array(z.object({
           name: z.string().optional(), service: z.string(), arm_sku: z.string(), region: z.string(),
           quantity: z.number().optional(), hours_per_month: z.number().optional(), os: z.string().optional(),
           pricing: z.string().optional(), ahb: z.union([z.string(), z.boolean()]).optional(), aks_tier: z.string().optional(),
+          service_name: z.string().optional(), meter: z.string().optional(),
         })).min(1).max(200),
         discount_pct: z.number().min(0).max(100).default(0),
         currency,
       },
       { readOnlyHint: true, openWorldHint: true },
-      async ({ rows, discount_pct, currency }) => text(await estimateRows(rows, currency, discount_pct)),
+      async ({ rows, discount_pct, currency }) => text(await estimateRows(rows, currency, discount_pct, 6, 45_000)),
     );
   },
   { serverInfo: { name: "azure-cost-estimator", version: "0.1.0" } },
