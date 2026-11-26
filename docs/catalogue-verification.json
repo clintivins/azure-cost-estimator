@@ -1,0 +1,1881 @@
+{
+  "generated_at": "2026-11-26T11:47:05.738Z",
+  "region": "uksouth",
+  "currency": "GBP",
+  "rows": [
+    {
+      "service": "API Management",
+      "sku": "Developer",
+      "status": "OK",
+      "monthly": 36.114560000000004,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Developer Unit",
+          "product": "API Management",
+          "sku": "Developer",
+          "unit": "1 Hour",
+          "unit_price": 0.049472,
+          "quantity": 730,
+          "monthly": 36.114560000000004,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour",
+        "Developer tier has no SLA: use for dev/test only"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Basic",
+      "status": "OK",
+      "monthly": 110.64829,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Basic Unit",
+          "product": "API Management",
+          "sku": "Basic",
+          "unit": "1 Hour",
+          "unit_price": 0.151573,
+          "quantity": 730,
+          "monthly": 110.64829,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Standard",
+      "status": "OK",
+      "monthly": 516.30491,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Standard Unit",
+          "product": "API Management",
+          "sku": "Standard",
+          "unit": "1 Hour",
+          "unit_price": 0.707267,
+          "quantity": 730,
+          "monthly": 516.30491,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Premium",
+      "status": "OK",
+      "monthly": 2101.55247,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Premium Unit",
+          "product": "API Management",
+          "sku": "Premium",
+          "unit": "1 Hour",
+          "unit_price": 2.878839,
+          "quantity": 730,
+          "monthly": 2101.55247,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Basic v2",
+      "status": "OK",
+      "monthly": 112.7777,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Basic v2 Unit",
+          "product": "API Management",
+          "sku": "Basic v2",
+          "unit": "1 Hour",
+          "unit_price": 0.15449,
+          "quantity": 730,
+          "monthly": 112.7777,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour",
+        "v2 tiers include an API call allowance; set calls_million to price overage"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Standard v2",
+      "status": "OK",
+      "monthly": 526.2935,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Standard v2 Unit",
+          "product": "API Management",
+          "sku": "Standard v2",
+          "unit": "1 Hour",
+          "unit_price": 0.72095,
+          "quantity": 730,
+          "monthly": 526.2935,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour",
+        "v2 tiers include an API call allowance; set calls_million to price overage"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Premium v2",
+      "status": "OK",
+      "monthly": 2105.18568,
+      "components": [
+        {
+          "label": "Units",
+          "meter": "Premium v2 Unit",
+          "product": "API Management",
+          "sku": "Premium v2",
+          "unit": "1 Hour",
+          "unit_price": 2.883816,
+          "quantity": 730,
+          "monthly": 2105.18568,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour",
+        "v2 tiers include an API call allowance; set calls_million to price overage"
+      ]
+    },
+    {
+      "service": "API Management",
+      "sku": "Consumption",
+      "status": "WARN",
+      "monthly": 0,
+      "components": [
+        {
+          "label": "Calls",
+          "meter": "Consumption Calls",
+          "product": "API Management",
+          "sku": "Consumption",
+          "unit": "10K",
+          "unit_price": 0.026315,
+          "quantity": 100,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "1M API calls/month (default; set calls_million)"
+      ],
+      "notes": [
+        "API Management: quantity = units (scale units) per instance, billed per hour",
+        "Consumption tier: first 1M calls/month free"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Standard_LRS",
+      "status": "WARN",
+      "monthly": 2.24059,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Hot LRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Hot LRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.014436,
+          "quantity": 100,
+          "monthly": 1.4436,
+          "tiered": true
+        },
+        {
+          "label": "Write operations",
+          "meter": "Hot LRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot LRS",
+          "unit": "10K",
+          "unit_price": 0.044359,
+          "quantity": 10,
+          "monthly": 0.44359000000000004,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Hot Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot LRS",
+          "unit": "10K",
+          "unit_price": 0.003534,
+          "quantity": 100,
+          "monthly": 0.3534,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "Hot access tier (default; set access_tier)",
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Standard_ZRS",
+      "status": "WARN",
+      "monthly": 2.71229,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Hot ZRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Hot ZRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.018044,
+          "quantity": 100,
+          "monthly": 1.8044,
+          "tiered": true
+        },
+        {
+          "label": "Write operations",
+          "meter": "Hot ZRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot ZRS",
+          "unit": "10K",
+          "unit_price": 0.055449,
+          "quantity": 10,
+          "monthly": 0.5544899999999999,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Hot ZRS Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot ZRS",
+          "unit": "10K",
+          "unit_price": 0.003534,
+          "quantity": 100,
+          "monthly": 0.3534,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "Hot access tier (default; set access_tier)",
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Standard_GRS",
+      "status": "WARN",
+      "monthly": 4.1352,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Hot GRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Hot GRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.028871,
+          "quantity": 100,
+          "monthly": 2.8871,
+          "tiered": true
+        },
+        {
+          "label": "Write operations",
+          "meter": "Hot GRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot GRS",
+          "unit": "10K",
+          "unit_price": 0.08947,
+          "quantity": 10,
+          "monthly": 0.8946999999999999,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Hot Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot GRS",
+          "unit": "10K",
+          "unit_price": 0.003534,
+          "quantity": 100,
+          "monthly": 0.3534,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "Hot access tier (default; set access_tier)",
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Standard_RAGRS",
+      "status": "WARN",
+      "monthly": 4.857,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Hot RA-GRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Hot RA-GRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.036089,
+          "quantity": 100,
+          "monthly": 3.6089,
+          "tiered": true
+        },
+        {
+          "label": "Write operations",
+          "meter": "Hot GRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot RA-GRS",
+          "unit": "10K",
+          "unit_price": 0.08947,
+          "quantity": 10,
+          "monthly": 0.8946999999999999,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Hot Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot RA-GRS",
+          "unit": "10K",
+          "unit_price": 0.003534,
+          "quantity": 100,
+          "monthly": 0.3534,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "Hot access tier (default; set access_tier)",
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Standard_GZRS",
+      "status": "WARN",
+      "monthly": 4.60136,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Hot GZRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Hot GZRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.03248,
+          "quantity": 100,
+          "monthly": 3.248,
+          "tiered": false
+        },
+        {
+          "label": "Write operations",
+          "meter": "Hot GZRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot GZRS",
+          "unit": "10K",
+          "unit_price": 0.099996,
+          "quantity": 10,
+          "monthly": 0.99996,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Hot ZRS Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Hot GZRS",
+          "unit": "10K",
+          "unit_price": 0.003534,
+          "quantity": 100,
+          "monthly": 0.3534,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "Hot access tier (default; set access_tier)",
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Cool_LRS",
+      "status": "WARN",
+      "monthly": 2.44344,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Cool LRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Cool LRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.007894,
+          "quantity": 100,
+          "monthly": 0.7894,
+          "tiered": false
+        },
+        {
+          "label": "Write operations",
+          "meter": "Cool LRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Cool LRS",
+          "unit": "10K",
+          "unit_price": 0.082704,
+          "quantity": 10,
+          "monthly": 0.82704,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Cool Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Cool LRS",
+          "unit": "10K",
+          "unit_price": 0.00827,
+          "quantity": 100,
+          "monthly": 0.827,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Storage account (Blob)",
+      "sku": "Cold_ZRS",
+      "status": "WARN",
+      "monthly": 9.3981,
+      "components": [
+        {
+          "label": "Data stored",
+          "meter": "Cold ZRS Data Stored",
+          "product": "General Block Blob v2",
+          "sku": "Cold ZRS",
+          "unit": "1 GB/Month",
+          "unit_price": 0.003759,
+          "quantity": 100,
+          "monthly": 0.3759,
+          "tiered": false
+        },
+        {
+          "label": "Write operations",
+          "meter": "Cold ZRS Write Operations",
+          "product": "General Block Blob v2",
+          "sku": "Cold ZRS",
+          "unit": "10K",
+          "unit_price": 0.15037,
+          "quantity": 10,
+          "monthly": 1.5037,
+          "tiered": false
+        },
+        {
+          "label": "Read operations",
+          "meter": "Cold ZRS Read Operations",
+          "product": "General Block Blob v2",
+          "sku": "Cold ZRS",
+          "unit": "10K",
+          "unit_price": 0.075185,
+          "quantity": 100,
+          "monthly": 7.5185,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "100 GB stored (default; set gb_stored)",
+        "100,000 write operations (default; set write_10k)",
+        "1,000,000 read operations (default; set read_10k)"
+      ],
+      "notes": [
+        "Storage: General Purpose v2 block blob, flat namespace; GB stored + write/read operations",
+        "Excludes egress, data retrieval (Cool/Cold/Archive) and other operation types"
+      ]
+    },
+    {
+      "service": "Private Endpoint",
+      "sku": "Standard",
+      "status": "WARN",
+      "monthly": 5.564059999999999,
+      "components": [
+        {
+          "label": "Endpoint hours",
+          "meter": "Standard Private Endpoint",
+          "product": "Virtual Network Private Link",
+          "sku": "Standard",
+          "unit": "1 Hour",
+          "unit_price": 0.007519,
+          "quantity": 730,
+          "monthly": 5.4888699999999995,
+          "tiered": false
+        },
+        {
+          "label": "Data processed in",
+          "meter": "Standard Data Processed - Ingress",
+          "product": "Virtual Network Private Link",
+          "sku": "Standard",
+          "unit": "1 GB",
+          "unit_price": 0.007519,
+          "quantity": 5,
+          "monthly": 0.037594999999999996,
+          "tiered": true
+        },
+        {
+          "label": "Data processed out",
+          "meter": "Standard Data Processed - Egress",
+          "product": "Virtual Network Private Link",
+          "sku": "Standard",
+          "unit": "1 GB",
+          "unit_price": 0.007519,
+          "quantity": 5,
+          "monthly": 0.037594999999999996,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "10 GB processed (default; set gb_processed)",
+        "GB processed split 50% ingress / 50% egress"
+      ],
+      "notes": [
+        "Private Endpoint: quantity = endpoints; endpoint hours + GB processed in/out"
+      ]
+    },
+    {
+      "service": "Azure DNS",
+      "sku": "Private",
+      "status": "WARN",
+      "monthly": 0.6766669999999999,
+      "components": [
+        {
+          "label": "Hosted zone",
+          "meter": "Private Zone",
+          "product": "Azure DNS",
+          "sku": "Private",
+          "unit": "1",
+          "unit_price": 0.375926,
+          "quantity": 1,
+          "monthly": 0.375926,
+          "tiered": true
+        },
+        {
+          "label": "Queries",
+          "meter": "Private Queries",
+          "product": "Azure DNS",
+          "sku": "Private",
+          "unit": "1M",
+          "unit_price": 0.300741,
+          "quantity": 1,
+          "monthly": 0.300741,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "Zone 1 billing zone for uksouth",
+        "1M queries/month per zone (default; set queries_million)"
+      ],
+      "notes": [
+        "DNS: quantity = hosted zones; per-zone monthly fee + queries per million",
+        "Zone fee drops after the first 25 zones per subscription (first-tier price used per line)"
+      ]
+    },
+    {
+      "service": "Azure DNS",
+      "sku": "Public",
+      "status": "WARN",
+      "monthly": 0.6766669999999999,
+      "components": [
+        {
+          "label": "Hosted zone",
+          "meter": "Public Zone",
+          "product": "Azure DNS",
+          "sku": "Public",
+          "unit": "1",
+          "unit_price": 0.375926,
+          "quantity": 1,
+          "monthly": 0.375926,
+          "tiered": true
+        },
+        {
+          "label": "Queries",
+          "meter": "Public Queries",
+          "product": "Azure DNS",
+          "sku": "Public",
+          "unit": "1M",
+          "unit_price": 0.300741,
+          "quantity": 1,
+          "monthly": 0.300741,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "Zone 1 billing zone for uksouth",
+        "1M queries/month per zone (default; set queries_million)"
+      ],
+      "notes": [
+        "DNS: quantity = hosted zones; per-zone monthly fee + queries per million",
+        "Zone fee drops after the first 25 zones per subscription (first-tier price used per line)"
+      ]
+    },
+    {
+      "service": "Log Analytics / Application Insights",
+      "sku": "Analytics",
+      "status": "WARN",
+      "monthly": 10.826659999999999,
+      "components": [
+        {
+          "label": "Data ingestion",
+          "meter": "Analytics Logs Data Ingestion",
+          "product": "Log Analytics",
+          "sku": "Analytics Logs",
+          "unit": "1 GB",
+          "unit_price": 2.165332,
+          "quantity": 10,
+          "monthly": 10.826659999999999,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "10 GB ingested/month (default; set gb_ingested)",
+        "90 days retention (default; set retention_days)"
+      ],
+      "notes": [
+        "Log Analytics / workspace-based Application Insights: GB ingested (Analytics logs) + retention beyond the included period",
+        "Workspace-based Application Insights is billed as Log Analytics ingestion; 90 days retention included",
+        "First 5 GB/month ingestion is free per billing account (applied to this line)"
+      ]
+    },
+    {
+      "service": "Azure Monitor alerts",
+      "sku": "Metric",
+      "status": "WARN",
+      "monthly": 0,
+      "components": [
+        {
+          "label": "Metric time series monitored",
+          "meter": "Alerts Metric Monitored",
+          "product": "Azure Monitor",
+          "sku": "Alerts",
+          "unit": "1/Month",
+          "unit_price": 0.075185,
+          "quantity": 10,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "10 metric alert rules (default; set alert_rules)",
+        "1 time series per rule (default; set time_series)"
+      ],
+      "notes": [
+        "Alerts: metric alerts per time series monitored; log alerts per rule by frequency",
+        "First 10 metric time series are free (applied to this line); action-group notifications (email/SMS) not included"
+      ]
+    },
+    {
+      "service": "Azure Monitor alerts",
+      "sku": "Log",
+      "status": "WARN",
+      "monthly": 5.638885,
+      "components": [
+        {
+          "label": "Log alert rules",
+          "meter": "Alerts System Log Monitored at 5 Minute Frequency",
+          "product": "Azure Monitor",
+          "sku": "Alerts",
+          "unit": "1/Month",
+          "unit_price": 1.127777,
+          "quantity": 5,
+          "monthly": 5.638885,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "5 log alert rules (default; set alert_rules)",
+        "evaluated every 5 min (default; set alert_frequency_min)"
+      ],
+      "notes": [
+        "Alerts: metric alerts per time series monitored; log alerts per rule by frequency"
+      ]
+    },
+    {
+      "service": "Microsoft Entra External ID",
+      "sku": "Core",
+      "status": "WARN",
+      "monthly": 0,
+      "components": [
+        {
+          "label": "Monthly active users",
+          "meter": "Core Monthly Active Users",
+          "product": "Microsoft Entra External ID",
+          "sku": "Core",
+          "unit": "1/Month",
+          "unit_price": 0.012218,
+          "quantity": 50000,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "50,000 monthly active users (default; set mau)"
+      ],
+      "notes": [
+        "Entra External ID: MAU (first 50,000 free) or M2M tokens",
+        "First 50,000 MAU free; add-ons (phone/SMS MFA, Go-Local, ID Governance) are separate meters"
+      ]
+    },
+    {
+      "service": "Microsoft Entra External ID",
+      "sku": "Basic",
+      "status": "WARN",
+      "monthly": 0,
+      "components": [
+        {
+          "label": "Monthly active users",
+          "meter": "Basic Monthly Active Users",
+          "product": "Microsoft Entra External ID",
+          "sku": "Basic",
+          "unit": "1/Month",
+          "unit_price": 0.022556,
+          "quantity": 50000,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "50,000 monthly active users (default; set mau)"
+      ],
+      "notes": [
+        "Entra External ID: MAU (first 50,000 free) or M2M tokens",
+        "First 50,000 MAU free; add-ons (phone/SMS MFA, Go-Local, ID Governance) are separate meters"
+      ]
+    },
+    {
+      "service": "Microsoft Entra External ID",
+      "sku": "M2M",
+      "status": "WARN",
+      "monthly": 7.52,
+      "components": [
+        {
+          "label": "M2M tokens",
+          "meter": "M2M Authentication Token",
+          "product": "Microsoft Entra External ID",
+          "sku": "M2M Authentication",
+          "unit": "1",
+          "unit_price": 0.000752,
+          "quantity": 10000,
+          "monthly": 7.52,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "10,000 M2M tokens/month (default; set tokens)"
+      ],
+      "notes": [
+        "Entra External ID: MAU (first 50,000 free) or M2M tokens",
+        "M2M is a premium add-on billed per token issued; MAU charges not included in this line"
+      ]
+    },
+    {
+      "service": "Managed Identity",
+      "sku": "UserAssigned",
+      "status": "INFO",
+      "monthly": 0,
+      "components": [],
+      "assumptions": [],
+      "notes": [
+        "No direct charge: managed identities and their Entra ID tokens are free. Costs come from the resources they access."
+      ]
+    },
+    {
+      "service": "Managed Identity",
+      "sku": "SystemAssigned",
+      "status": "INFO",
+      "monthly": 0,
+      "components": [],
+      "assumptions": [],
+      "notes": [
+        "No direct charge: managed identities and their Entra ID tokens are free. Costs come from the resources they access."
+      ]
+    },
+    {
+      "service": "Azure Functions",
+      "sku": "Consumption",
+      "status": "WARN",
+      "monthly": 0,
+      "components": [
+        {
+          "label": "Executions",
+          "meter": "Standard Total Executions",
+          "product": "Functions",
+          "sku": "Standard",
+          "unit": "10",
+          "unit_price": 0.000002,
+          "quantity": 100000,
+          "monthly": 0,
+          "tiered": true
+        },
+        {
+          "label": "Execution time",
+          "meter": "Standard Execution Time",
+          "product": "Functions",
+          "sku": "Standard",
+          "unit": "1 GB Second",
+          "unit_price": 0.000012,
+          "quantity": 100000,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "1M executions/month (default; set executions_million)",
+        "100,000 GB-seconds (200 ms x 0.5 GB per execution) (default; set gb_seconds)"
+      ],
+      "notes": [
+        "Functions: Consumption/Flex = executions + GB-seconds; Premium EPn = vCPU + memory hours per instance",
+        "Monthly free grant applied to this line; storage account for the Function app priced separately"
+      ]
+    },
+    {
+      "service": "Azure Functions",
+      "sku": "Flex",
+      "status": "WARN",
+      "monthly": 8.625,
+      "components": [
+        {
+          "label": "Executions",
+          "meter": "On Demand Total Executions",
+          "product": "Flex Consumption",
+          "sku": "On Demand",
+          "unit": "10",
+          "unit_price": 0.000003,
+          "quantity": 100000,
+          "monthly": 0.225,
+          "tiered": true
+        },
+        {
+          "label": "Execution time",
+          "meter": "On Demand Execution Time",
+          "product": "Flex Consumption",
+          "sku": "On Demand",
+          "unit": "1 GB Second",
+          "unit_price": 0.000028,
+          "quantity": 400000,
+          "monthly": 8.4,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "1M executions/month (default; set executions_million)",
+        "400,000 GB-seconds (200 ms x 2 GB per execution) (default; set gb_seconds)"
+      ],
+      "notes": [
+        "Functions: Consumption/Flex = executions + GB-seconds; Premium EPn = vCPU + memory hours per instance",
+        "Monthly free grant applied to this line; storage account for the Function app priced separately"
+      ]
+    },
+    {
+      "service": "Azure Functions",
+      "sku": "EP1",
+      "status": "OK",
+      "monthly": 126.89371,
+      "components": [
+        {
+          "label": "vCPU hours",
+          "meter": "Premium vCPU Duration",
+          "product": "Premium Functions",
+          "sku": "Premium",
+          "unit": "1 Hour",
+          "unit_price": 0.139093,
+          "quantity": 730,
+          "monthly": 101.53788999999999,
+          "tiered": false
+        },
+        {
+          "label": "Memory hours",
+          "meter": "Premium Memory Duration",
+          "product": "Premium Functions",
+          "sku": "Premium",
+          "unit": "1 GiB Hour",
+          "unit_price": 0.009924,
+          "quantity": 2555,
+          "monthly": 25.35582,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Functions: Consumption/Flex = executions + GB-seconds; Premium EPn = vCPU + memory hours per instance",
+        "EP1 = 1 vCPU / 3.5 GB per instance; quantity = always-ready instances"
+      ]
+    },
+    {
+      "service": "Azure Functions",
+      "sku": "EP2",
+      "status": "OK",
+      "monthly": 253.78742,
+      "components": [
+        {
+          "label": "vCPU hours",
+          "meter": "Premium vCPU Duration",
+          "product": "Premium Functions",
+          "sku": "Premium",
+          "unit": "1 Hour",
+          "unit_price": 0.139093,
+          "quantity": 1460,
+          "monthly": 203.07577999999998,
+          "tiered": false
+        },
+        {
+          "label": "Memory hours",
+          "meter": "Premium Memory Duration",
+          "product": "Premium Functions",
+          "sku": "Premium",
+          "unit": "1 GiB Hour",
+          "unit_price": 0.009924,
+          "quantity": 5110,
+          "monthly": 50.71164,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Functions: Consumption/Flex = executions + GB-seconds; Premium EPn = vCPU + memory hours per instance",
+        "EP2 = 2 vCPU / 7 GB per instance; quantity = always-ready instances"
+      ]
+    },
+    {
+      "service": "Azure Functions",
+      "sku": "EP3",
+      "status": "OK",
+      "monthly": 507.57484,
+      "components": [
+        {
+          "label": "vCPU hours",
+          "meter": "Premium vCPU Duration",
+          "product": "Premium Functions",
+          "sku": "Premium",
+          "unit": "1 Hour",
+          "unit_price": 0.139093,
+          "quantity": 2920,
+          "monthly": 406.15155999999996,
+          "tiered": false
+        },
+        {
+          "label": "Memory hours",
+          "meter": "Premium Memory Duration",
+          "product": "Premium Functions",
+          "sku": "Premium",
+          "unit": "1 GiB Hour",
+          "unit_price": 0.009924,
+          "quantity": 10220,
+          "monthly": 101.42328,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Functions: Consumption/Flex = executions + GB-seconds; Premium EPn = vCPU + memory hours per instance",
+        "EP3 = 4 vCPU / 14 GB per instance; quantity = always-ready instances"
+      ]
+    },
+    {
+      "service": "Logic Apps",
+      "sku": "WS1",
+      "status": "OK",
+      "monthly": 141.932075,
+      "components": [
+        {
+          "label": "vCPU hours",
+          "meter": "Standard vCPU Duration",
+          "product": "Logic Apps",
+          "sku": "Standard",
+          "unit": "1 Hour",
+          "unit_price": 0.155483,
+          "quantity": 730,
+          "monthly": 113.50259000000001,
+          "tiered": false
+        },
+        {
+          "label": "Memory hours",
+          "meter": "Standard Memory Duration",
+          "product": "Logic Apps",
+          "sku": "Standard",
+          "unit": "1 GiB Hour",
+          "unit_price": 0.011127,
+          "quantity": 2555,
+          "monthly": 28.429485,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Logic Apps: Standard WSn = vCPU + memory hours; Consumption = per action",
+        "WS1 = 1 vCPU / 3.5 GB per instance; built-in operations included; storage account priced separately"
+      ]
+    },
+    {
+      "service": "Logic Apps",
+      "sku": "WS2",
+      "status": "OK",
+      "monthly": 283.86415,
+      "components": [
+        {
+          "label": "vCPU hours",
+          "meter": "Standard vCPU Duration",
+          "product": "Logic Apps",
+          "sku": "Standard",
+          "unit": "1 Hour",
+          "unit_price": 0.155483,
+          "quantity": 1460,
+          "monthly": 227.00518000000002,
+          "tiered": false
+        },
+        {
+          "label": "Memory hours",
+          "meter": "Standard Memory Duration",
+          "product": "Logic Apps",
+          "sku": "Standard",
+          "unit": "1 GiB Hour",
+          "unit_price": 0.011127,
+          "quantity": 5110,
+          "monthly": 56.85897,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Logic Apps: Standard WSn = vCPU + memory hours; Consumption = per action",
+        "WS2 = 2 vCPU / 7 GB per instance; built-in operations included; storage account priced separately"
+      ]
+    },
+    {
+      "service": "Logic Apps",
+      "sku": "WS3",
+      "status": "OK",
+      "monthly": 567.7283,
+      "components": [
+        {
+          "label": "vCPU hours",
+          "meter": "Standard vCPU Duration",
+          "product": "Logic Apps",
+          "sku": "Standard",
+          "unit": "1 Hour",
+          "unit_price": 0.155483,
+          "quantity": 2920,
+          "monthly": 454.01036000000005,
+          "tiered": false
+        },
+        {
+          "label": "Memory hours",
+          "meter": "Standard Memory Duration",
+          "product": "Logic Apps",
+          "sku": "Standard",
+          "unit": "1 GiB Hour",
+          "unit_price": 0.011127,
+          "quantity": 10220,
+          "monthly": 113.71794,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Logic Apps: Standard WSn = vCPU + memory hours; Consumption = per action",
+        "WS3 = 4 vCPU / 14 GB per instance; built-in operations included; storage account priced separately"
+      ]
+    },
+    {
+      "service": "Logic Apps",
+      "sku": "Consumption",
+      "status": "WARN",
+      "monthly": 2.7640000000000002,
+      "components": [
+        {
+          "label": "Built-in actions",
+          "meter": "Consumption Built-in Actions",
+          "product": "Logic Apps",
+          "sku": "Consumption",
+          "unit": "1",
+          "unit_price": 0.000019,
+          "quantity": 100000,
+          "monthly": 1.824,
+          "tiered": true
+        },
+        {
+          "label": "Standard connector actions",
+          "meter": "Consumption Standard Connector Actions",
+          "product": "Logic Apps",
+          "sku": "Consumption",
+          "unit": "1",
+          "unit_price": 0.000094,
+          "quantity": 10000,
+          "monthly": 0.94,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "100,000 built-in actions/month (default; set actions)",
+        "10,000 standard connector actions/month (default; set connector_actions)",
+        "0 enterprise connector actions/month (default; set enterprise_actions)"
+      ],
+      "notes": [
+        "Logic Apps: Standard WSn = vCPU + memory hours; Consumption = per action"
+      ]
+    },
+    {
+      "service": "Service Bus",
+      "sku": "Basic",
+      "status": "WARN",
+      "monthly": 0.037593,
+      "components": [
+        {
+          "label": "Operations",
+          "meter": "Basic Messaging Operations",
+          "product": "Service Bus",
+          "sku": "Basic",
+          "unit": "1M",
+          "unit_price": 0.037593,
+          "quantity": 1,
+          "monthly": 0.037593,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "1M messaging operations/month (default; set messages_million)"
+      ],
+      "notes": [
+        "Service Bus: Premium = messaging units x hours (quantity = MUs); Standard = base charge + operations; Basic = operations"
+      ]
+    },
+    {
+      "service": "Service Bus",
+      "sku": "Standard",
+      "status": "WARN",
+      "monthly": 7.3773800000000005,
+      "components": [
+        {
+          "label": "Base charge",
+          "meter": "Standard Base Unit",
+          "product": "Service Bus",
+          "sku": "Standard",
+          "unit": "1/Hour",
+          "unit_price": 0.010106,
+          "quantity": 730,
+          "monthly": 7.3773800000000005,
+          "tiered": false
+        },
+        {
+          "label": "Operations",
+          "meter": "Standard Messaging Operations",
+          "product": "Service Bus",
+          "sku": "Standard",
+          "unit": "1M",
+          "unit_price": 0.601481,
+          "quantity": 1,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "1M messaging operations/month (default; set messages_million)"
+      ],
+      "notes": [
+        "Service Bus: Premium = messaging units x hours (quantity = MUs); Standard = base charge + operations; Basic = operations",
+        "Standard includes the first 13M operations/month"
+      ]
+    },
+    {
+      "service": "Service Bus",
+      "sku": "Premium",
+      "status": "OK",
+      "monthly": 509.05966,
+      "components": [
+        {
+          "label": "Messaging units",
+          "meter": "Premium Messaging Unit",
+          "product": "Service Bus",
+          "sku": "Premium",
+          "unit": "1/Hour",
+          "unit_price": 0.697342,
+          "quantity": 730,
+          "monthly": 509.05966,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month"
+      ],
+      "notes": [
+        "Service Bus: Premium = messaging units x hours (quantity = MUs); Standard = base charge + operations; Basic = operations"
+      ]
+    },
+    {
+      "service": "Key Vault",
+      "sku": "Standard",
+      "status": "WARN",
+      "monthly": 0.22555999999999998,
+      "components": [
+        {
+          "label": "Operations",
+          "meter": "Operations",
+          "product": "Key Vault",
+          "sku": "Standard",
+          "unit": "10K",
+          "unit_price": 0.022556,
+          "quantity": 10,
+          "monthly": 0.22555999999999998,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "100,000 operations/month (default; set ops_10k)"
+      ],
+      "notes": [
+        "Key Vault: operations per 10K (+ HSM keys on Premium)",
+        "Certificate renewals, key rotations and advanced key operations are separate meters"
+      ]
+    },
+    {
+      "service": "Key Vault",
+      "sku": "Premium",
+      "status": "WARN",
+      "monthly": 0.22555999999999998,
+      "components": [
+        {
+          "label": "Operations",
+          "meter": "Operations",
+          "product": "Key Vault",
+          "sku": "Premium",
+          "unit": "10K",
+          "unit_price": 0.022556,
+          "quantity": 10,
+          "monthly": 0.22555999999999998,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "100,000 operations/month (default; set ops_10k)"
+      ],
+      "notes": [
+        "Key Vault: operations per 10K (+ HSM keys on Premium)",
+        "Certificate renewals, key rotations and advanced key operations are separate meters"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "B1",
+      "status": "WARN",
+      "monthly": 9.87909,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "B1",
+          "product": "Azure App Service Basic Plan - Linux",
+          "sku": "B1",
+          "unit": "1 Hour",
+          "unit_price": 0.013533,
+          "quantity": 730,
+          "monthly": 9.87909,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "S1",
+      "status": "WARN",
+      "monthly": 54.88505,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "S1 App",
+          "product": "Azure App Service Standard Plan - Linux",
+          "sku": "S1",
+          "unit": "1 Hour",
+          "unit_price": 0.075185,
+          "quantity": 730,
+          "monthly": 54.88505,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "P1v2",
+      "status": "WARN",
+      "monthly": 62.020070000000004,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "P1 v2 App",
+          "product": "Azure App Service Premium v2 Plan - Linux",
+          "sku": "P1 v2",
+          "unit": "1 Hour",
+          "unit_price": 0.084959,
+          "quantity": 730,
+          "monthly": 62.020070000000004,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "P0v3",
+      "status": "WARN",
+      "monthly": 47.47555,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "P0v3 App",
+          "product": "Azure App Service Premium v3 Plan - Linux",
+          "sku": "P0v3",
+          "unit": "1 Hour",
+          "unit_price": 0.065035,
+          "quantity": 730,
+          "monthly": 47.47555,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "P1v3",
+      "status": "WARN",
+      "monthly": 94.9511,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "P1 v3 App",
+          "product": "Azure App Service Premium v3 Plan - Linux",
+          "sku": "P1 v3",
+          "unit": "1 Hour",
+          "unit_price": 0.13007,
+          "quantity": 730,
+          "monthly": 94.9511,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "P3v3",
+      "status": "WARN",
+      "monthly": 379.80513,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "P3 v3 App",
+          "product": "Azure App Service Premium v3 Plan - Linux",
+          "sku": "P3 v3",
+          "unit": "1 Hour",
+          "unit_price": 0.520281,
+          "quantity": 730,
+          "monthly": 379.80513,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "App Service plan",
+      "sku": "P1mv3",
+      "status": "WARN",
+      "monthly": 113.94132,
+      "components": [
+        {
+          "label": "Plan instance hours",
+          "meter": "P1mv3 App",
+          "product": "Azure App Service Premium v3 Plan - Linux",
+          "sku": "P1mv3",
+          "unit": "1 Hour",
+          "unit_price": 0.156084,
+          "quantity": 730,
+          "monthly": 113.94132,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "Linux plan (default; set os)"
+      ],
+      "notes": [
+        "App Service: quantity = instances, plan hours; OS from the os column"
+      ]
+    },
+    {
+      "service": "Azure Front Door",
+      "sku": "Standard",
+      "status": "WARN",
+      "monthly": 27.611780000000003,
+      "components": [
+        {
+          "label": "Base fee",
+          "meter": "Standard Base Fees",
+          "product": "Azure Front Door",
+          "sku": "Standard",
+          "unit": "1/Month",
+          "unit_price": 26.3148,
+          "quantity": 1,
+          "monthly": 26.3148,
+          "tiered": false
+        },
+        {
+          "label": "Requests",
+          "meter": "Standard Requests",
+          "product": "Azure Front Door",
+          "sku": "Standard",
+          "unit": "10K",
+          "unit_price": 0.006767,
+          "quantity": 100,
+          "monthly": 0.6767,
+          "tiered": true
+        },
+        {
+          "label": "Data transfer out",
+          "meter": "Standard Data Transfer Out",
+          "product": "Azure Front Door",
+          "sku": "Standard",
+          "unit": "1 GB",
+          "unit_price": 0.062028,
+          "quantity": 10,
+          "monthly": 0.6202799999999999,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "Zone 1 billing zone for uksouth",
+        "1M requests/month (default; set requests_million)",
+        "10 GB out to clients (default; set gb_out)"
+      ],
+      "notes": [
+        "Front Door Standard/Premium: monthly base fee + requests + data transfer out",
+        "Edge-to-origin transfer and WAF add-ons not included"
+      ]
+    },
+    {
+      "service": "Azure Front Door",
+      "sku": "Premium",
+      "status": "WARN",
+      "monthly": 249.85905300000002,
+      "components": [
+        {
+          "label": "Base fee",
+          "meter": "Premium Base Fees",
+          "product": "Azure Front Door",
+          "sku": "Premium",
+          "unit": "1/Month",
+          "unit_price": 248.110973,
+          "quantity": 1,
+          "monthly": 248.110973,
+          "tiered": false
+        },
+        {
+          "label": "Requests",
+          "meter": "Premium Requests",
+          "product": "Azure Front Door",
+          "sku": "Premium",
+          "unit": "10K",
+          "unit_price": 0.011278,
+          "quantity": 100,
+          "monthly": 1.1278,
+          "tiered": true
+        },
+        {
+          "label": "Data transfer out",
+          "meter": "Premium Data Transfer Out",
+          "product": "Azure Front Door",
+          "sku": "Premium",
+          "unit": "1 GB",
+          "unit_price": 0.062028,
+          "quantity": 10,
+          "monthly": 0.6202799999999999,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "Zone 1 billing zone for uksouth",
+        "1M requests/month (default; set requests_million)",
+        "10 GB out to clients (default; set gb_out)"
+      ],
+      "notes": [
+        "Front Door Standard/Premium: monthly base fee + requests + data transfer out",
+        "Edge-to-origin transfer and WAF add-ons not included"
+      ]
+    },
+    {
+      "service": "Application Gateway",
+      "sku": "Standard v2",
+      "status": "WARN",
+      "monthly": 141.60394,
+      "components": [
+        {
+          "label": "Fixed cost",
+          "meter": "Standard Fixed Cost",
+          "product": "Application Gateway Standard v2",
+          "sku": "Standard",
+          "unit": "1/Hour",
+          "unit_price": 0.187963,
+          "quantity": 730,
+          "monthly": 137.21299,
+          "tiered": false
+        },
+        {
+          "label": "Capacity units",
+          "meter": "Standard Capacity Units",
+          "product": "Application Gateway Standard v2",
+          "sku": "Standard",
+          "unit": "1/Hour",
+          "unit_price": 0.006015,
+          "quantity": 730,
+          "monthly": 4.39095,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "1 capacity units on average (default; set capacity_units)"
+      ],
+      "notes": [
+        "Application Gateway v2: fixed hourly cost + capacity units"
+      ]
+    },
+    {
+      "service": "Application Gateway",
+      "sku": "WAF v2",
+      "status": "WARN",
+      "monthly": 254.8868,
+      "components": [
+        {
+          "label": "Fixed cost",
+          "meter": "Standard Fixed Cost",
+          "product": "Application Gateway WAF v2",
+          "sku": "Standard",
+          "unit": "1/Hour",
+          "unit_price": 0.338333,
+          "quantity": 730,
+          "monthly": 246.98309,
+          "tiered": false
+        },
+        {
+          "label": "Capacity units",
+          "meter": "Standard Capacity Units",
+          "product": "Application Gateway WAF v2",
+          "sku": "Standard",
+          "unit": "1/Hour",
+          "unit_price": 0.010827,
+          "quantity": 730,
+          "monthly": 7.90371,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "1 capacity units on average (default; set capacity_units)"
+      ],
+      "notes": [
+        "Application Gateway v2: fixed hourly cost + capacity units"
+      ]
+    },
+    {
+      "service": "Application Gateway",
+      "sku": "Basic v2",
+      "status": "WARN",
+      "monthly": 19.1333,
+      "components": [
+        {
+          "label": "Fixed cost",
+          "meter": "Basic Fixed Cost",
+          "product": "Application Gateway Basic v2",
+          "sku": "Basic",
+          "unit": "1/Hour",
+          "unit_price": 0.019894,
+          "quantity": 730,
+          "monthly": 14.522619999999998,
+          "tiered": false
+        },
+        {
+          "label": "Capacity units",
+          "meter": "Basic Capacity Units",
+          "product": "Application Gateway Basic v2",
+          "sku": "Basic",
+          "unit": "1/Hour",
+          "unit_price": 0.006316,
+          "quantity": 730,
+          "monthly": 4.61068,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "1 capacity units on average (default; set capacity_units)"
+      ],
+      "notes": [
+        "Application Gateway v2: fixed hourly cost + capacity units"
+      ]
+    },
+    {
+      "service": "Event Grid",
+      "sku": "Basic",
+      "status": "WARN",
+      "monthly": 0.405999,
+      "components": [
+        {
+          "label": "Operations",
+          "meter": "Standard Operations",
+          "product": "Event Grid",
+          "sku": "Standard",
+          "unit": "100K",
+          "unit_price": 0.045111,
+          "quantity": 10,
+          "monthly": 0.405999,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "1M operations/month (default; set ops_million)"
+      ],
+      "notes": [
+        "Event Grid: Basic topics = operations (first 100K free); Namespaces = throughput units + event operations"
+      ]
+    },
+    {
+      "service": "Event Grid",
+      "sku": "Namespace",
+      "status": "WARN",
+      "monthly": 21.95402,
+      "components": [
+        {
+          "label": "Throughput units",
+          "meter": "Standard Throughput Unit",
+          "product": "Event Grid",
+          "sku": "Standard",
+          "unit": "1 Hour",
+          "unit_price": 0.030074,
+          "quantity": 730,
+          "monthly": 21.95402,
+          "tiered": false
+        },
+        {
+          "label": "Event operations",
+          "meter": "Standard Event Operations",
+          "product": "Event Grid",
+          "sku": "Standard",
+          "unit": "1M",
+          "unit_price": 0.451111,
+          "quantity": 1,
+          "monthly": 0,
+          "tiered": true
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "1M operations/month (default; set ops_million)"
+      ],
+      "notes": [
+        "Event Grid: Basic topics = operations (first 100K free); Namespaces = throughput units + event operations"
+      ]
+    },
+    {
+      "service": "Azure Cosmos DB (NoSQL)",
+      "sku": "Provisioned",
+      "status": "WARN",
+      "monthly": 19.44343,
+      "components": [
+        {
+          "label": "Provisioned throughput",
+          "meter": "100 RU/s",
+          "product": "Azure Cosmos DB",
+          "sku": "RUs",
+          "unit": "1/Hour",
+          "unit_price": 0.006015,
+          "quantity": 2920,
+          "monthly": 17.5638,
+          "tiered": false
+        },
+        {
+          "label": "Data stored",
+          "meter": "Data Stored",
+          "product": "Azure Cosmos DB",
+          "sku": "RUs",
+          "unit": "1 GB/Month",
+          "unit_price": 0.187963,
+          "quantity": 10,
+          "monthly": 1.87963,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "730 h/month",
+        "10 GB stored (default; set gb_stored)",
+        "400 RU/s provisioned (default; set ru_per_sec)"
+      ],
+      "notes": [
+        "Cosmos DB: provisioned RU/s x hours (or serverless RUs) + GB stored, single region",
+        "Single region, manual throughput; backup beyond the free periodic copies not included"
+      ]
+    },
+    {
+      "service": "Azure Cosmos DB (NoSQL)",
+      "sku": "Serverless",
+      "status": "WARN",
+      "monthly": 4.11263,
+      "components": [
+        {
+          "label": "Request units",
+          "meter": "1M RUs",
+          "product": "Azure Cosmos DB serverless",
+          "sku": "RUs",
+          "unit": "1M",
+          "unit_price": 0.2233,
+          "quantity": 10,
+          "monthly": 2.233,
+          "tiered": false
+        },
+        {
+          "label": "Data stored",
+          "meter": "Data Stored",
+          "product": "Azure Cosmos DB",
+          "sku": "RUs",
+          "unit": "1 GB/Month",
+          "unit_price": 0.187963,
+          "quantity": 10,
+          "monthly": 1.87963,
+          "tiered": false
+        }
+      ],
+      "assumptions": [
+        "10 GB stored (default; set gb_stored)",
+        "10M RUs/month (default; set ru_million)"
+      ],
+      "notes": [
+        "Cosmos DB: provisioned RU/s x hours (or serverless RUs) + GB stored, single region",
+        "Storage priced on the standard Cosmos DB 'Data Stored' meter"
+      ]
+    }
+  ]
+}
