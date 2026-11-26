@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "vitest run"
+    "test": "vitest run",
+    "verify:catalogue": "npx -y tsx@4 scripts/verify-catalogue.ts",
+    "record:fixture": "npx -y tsx@4 scripts/record-fixture.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.26.0",

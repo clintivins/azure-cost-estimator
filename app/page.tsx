@@ -56,7 +56,7 @@ export default function Home() {
 
   const exportXlsx = () => {
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(result.rows), "Estimate");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(result.rows.map(({ components, ...r }: Row) => r)), "Estimate");
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet([{ currency: result.currency, discount_pct: result.discount_pct, ...result.totals }]), "Totals");
     XLSX.writeFile(wb, "azure-estimate.xlsx");
   };
@@ -84,18 +84,20 @@ export default function Home() {
         </div>
         {err && <p className="err">{err}</p>}
         {result?.warning && <p className="err">{result.warning}</p>}
+        {result && <p className="sub" style={{ margin: "8px 0 0" }}>{["OK", "WARN", "INFO", "ERROR"].map((s) => `${result.rows.filter((r: Row) => r.status === s).length} ${s}`).join(" · ")}{result.rows.some((r: Row) => r.status === "ERROR") ? " — total excludes ERROR rows" : ""}</p>}
       </div>
       {result && (
         <div className="card scroll">
           <table>
             <thead><tr><th className="l">Status</th><th className="l">Name</th><th className="l">Service</th><th className="l">SKU</th><th className="l">Region</th><th>Qty</th><th className="l">Pricing</th>
-              {COLS.map(([, h]) => <th key={h}>{h}</th>)}<th>Saving vs PAYG</th><th className="l">Message</th></tr></thead>
+              {COLS.map(([, h]) => <th key={h}>{h}</th>)}<th>Saving vs PAYG</th><th className="l">Matched meter(s)</th><th>Unit price</th><th className="l">Usage</th><th className="l">Assumptions</th><th className="l">Message</th></tr></thead>
             <tbody>{result.rows.map((r: Row, i: number) => (
               <tr key={i}><td className="l"><span className={`s ${r.status}`}>{r.status}</span></td><td className="l">{r.name}</td><td className="l">{r.service}</td><td className="l">{r.arm_sku}</td><td className="l">{r.region}</td><td>{r.quantity}</td><td className="l">{r.chosen_option}</td>
-                {COLS.map(([k]) => <td key={k}>{fmt(r[k])}</td>)}<td>{r.saving_vs_payg_pct == null ? "–" : `${r.saving_vs_payg_pct}%`}</td><td className="msg">{r.message}</td></tr>))}
+                {COLS.map(([k]) => <td key={k}>{fmt(r[k])}</td>)}<td>{r.saving_vs_payg_pct == null ? "–" : `${r.saving_vs_payg_pct}%`}</td>
+                <td className="msg">{r.matched_meters}</td><td>{r.unit_price == null ? "–" : r.unit_price}</td><td className="msg">{r.usage}</td><td className="msg">{r.assumptions}</td><td className="msg">{r.message}</td></tr>))}
             </tbody>
             <tfoot><tr><td className="l" colSpan={7}>Totals ({result.currency}{result.discount_pct ? `, ${result.discount_pct}% discount` : ""})</td>
-              <td>{fmt(result.totals.payg_month)}</td><td colSpan={5}></td><td>{fmt(result.totals.chosen_month)}</td><td>{fmt(result.totals.chosen_year)}</td><td>{result.totals.saving_vs_payg_pct}%</td><td></td></tr></tfoot>
+              <td>{fmt(result.totals.payg_month)}</td><td colSpan={5}></td><td>{fmt(result.totals.chosen_month)}</td><td>{fmt(result.totals.chosen_year)}</td><td>{result.totals.saving_vs_payg_pct}%</td><td colSpan={5}></td></tr></tfoot>
           </table>
         </div>
       )}
