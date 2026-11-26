@@ -30,14 +30,15 @@ const handler = createMcpHandler(
     );
     server.tool(
       "estimate_bom",
-      "Estimate a bill of materials. Each row: name, service (VM|AKS|Disk|Other, or an Azure service name such as 'API Management'), arm_sku, region, quantity, hours_per_month, os, pricing, ahb, aks_tier, service_name and meter (optional, narrow Other lookups). Max 200 rows. Rows that cannot be priced come back as ERROR rows, not a failed call.",
+      "Estimate a bill of materials with service-aware pricing (API Management, Storage, Private Endpoint, Private DNS, Log Analytics/App Insights, Monitor alerts, Entra External ID, Managed Identity, Functions, Logic Apps, Service Bus, Key Vault, App Service, Front Door, Application Gateway, Event Grid, Cosmos DB, plus VM/AKS/Disk). Each row: name, service (VM|AKS|Disk|Other, or an Azure service name such as 'API Management'), arm_sku, region, quantity, hours_per_month, os, pricing, ahb, aks_tier, service_name and meter (optional, narrow Other lookups). Max 200 rows. Rows that cannot be priced come back as ERROR rows, not a failed call.",
       {
         rows: z.array(z.object({
           name: z.string().optional(), service: z.string(), arm_sku: z.string(), region: z.string(),
           quantity: z.number().optional(), hours_per_month: z.number().optional(), os: z.string().optional(),
           pricing: z.string().optional(), ahb: z.union([z.string(), z.boolean()]).optional(), aks_tier: z.string().optional(),
           service_name: z.string().optional(), meter: z.string().optional(),
-        })).min(1).max(200),
+          usage: z.string().optional().describe("Usage drivers as key=value pairs, e.g. 'gb_stored=500; read_10k=200'"),
+        }).catchall(z.union([z.string(), z.number(), z.boolean()])).describe("Extra numeric usage columns are accepted, e.g. gb_stored, write_10k, read_10k, gb_processed, queries_million, gb_ingested, retention_days, alert_rules, mau, tokens, calls_million, executions_million, messages_million, ops_10k, requests_million, gb_out, capacity_units, ru_per_sec")).min(1).max(200),
         discount_pct: z.number().min(0).max(100).default(0),
         currency,
       },

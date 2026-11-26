@@ -2,22 +2,34 @@ import {
   getVmRates, getAksFees, aksTierPerHour, getDiskMonthly, getOther, isKnownRegion,
   VmRates, PricingOption, PRICING_OPTIONS,
 } from "./pricing";
+import { priceCatalogue, resolve, ComponentResult } from "./catalogue";
 
 export interface InputRow {
   name?: string; service?: string; arm_sku?: string; region?: string; quantity?: number | string;
   hours_per_month?: number | string; os?: string; pricing?: string; ahb?: string | boolean; aks_tier?: string;
   /** Optional Azure serviceName for Other rows, e.g. "API Management", "Service Bus". */
   service_name?: string;
-  /** Optional meter-name substring for Other rows, e.g. "Unit", "Messaging Unit". */
+  /** Optional meter-name substring for Other rows, e.g. "Unit", "Messaging Unit". Forces the generic lookup. */
   meter?: string;
+  /** Usage drivers for service-aware pricing (gb_stored, write_10k, read_10k, gb_processed, queries_million, gb_ingested, ...). */
+  [usage: string]: unknown;
 }
-export type Status = "OK" | "WARN" | "ERROR";
+export type Status = "OK" | "WARN" | "INFO" | "ERROR";
 export interface ResultRow {
-  name: string; service: string; arm_sku: string; region: string; quantity: number; hours_per_month: number;
+  name: string; service: string; arm_sku: string; region: string; quantity: number; hours_per_month: number | null;
   os: string; pricing: string; status: Status; message: string;
   payg_month: number | null; spot_month: number | null; ri1y_month: number | null; ri3y_month: number | null;
   sp1y_month: number | null; sp3y_month: number | null; chosen_option: string;
   chosen_month: number | null; chosen_year: number | null; saving_vs_payg_pct: number | null;
+  /** Retail meter(s) used, "; "-separated. */
+  matched_meters: string;
+  /** Unit price of the primary meter (first billable tier), in the response currency, before discount. */
+  unit_price: number | null;
+  /** Billable quantity per meter, e.g. "730 x 1 Hour; 100 x 1 GB/Month". */
+  usage: string;
+  /** Usage values used, with defaults called out. */
+  assumptions: string;
+  components?: ComponentResult[];
 }
 export interface Totals { payg_month: number; chosen_month: number; chosen_year: number; saving_vs_payg_pct: number }
 
@@ -50,8 +62,10 @@ export function normPricing(p?: string): PricingOption | undefined {
   return PRICING_OPTIONS.find((o) => o.toUpperCase() === s);
 }
 
-export function finalise(base: Omit<ResultRow, "payg_month"|"spot_month"|"ri1y_month"|"ri3y_month"|"sp1y_month"|"sp3y_month"|"chosen_option"|"chosen_month"|"chosen_year"|"saving_vs_payg_pct">,
+type Extra = "matched_meters" | "unit_price" | "usage" | "assumptions";
+export function finalise(b: Omit<ResultRow, "payg_month"|"spot_month"|"ri1y_month"|"ri3y_month"|"sp1y_month"|"sp3y_month"|"chosen_option"|"chosen_month"|"chosen_year"|"saving_vs_payg_pct"|Extra> & Partial<Pick<ResultRow, Extra>>,
   o: Options, choice: PricingOption, discountPct: number, extraMonthly = 0): ResultRow {
+  const base = { matched_meters: "", unit_price: null, usage: "", assumptions: "", ...b };
   const f = 1 - discountPct / 100;
   const adj = (v?: number) => (v == null ? null : (v + extraMonthly) * f);
   let status = base.status, message = base.message, chosen = choice;
@@ -89,6 +103,20 @@ export async function estimateRow(input: InputRow, currency = "GBP", discountPct
   const base = { name: String(row.name ?? ""), service: known ?? service, arm_sku: sku, region, quantity: qty, hours_per_month: hours, os, pricing: String(row.pricing ?? "PAYG"), status: "OK" as Status, message: "" };
   const err = (m: string) => finalise({ ...base, status: "ERROR", message: m }, {}, "PAYG", 0);
 
+  // Service-aware catalogue (APIM, Storage, Private Endpoint, DNS, Log Analytics, ...). An explicit `meter` forces the generic lookup.
+  if ((svc === "Other" || !svc) && !meter && resolve(row).entry) {
+    if (!choice) return err(`Unknown pricing '${row.pricing}' (use ${PRICING_OPTIONS.join("/")})`);
+    if (qty <= 0 || hours < 0 || hours > 744) return err("quantity must be > 0 and hours_per_month 0-744");
+    const ent = resolve(row).entry!;
+    if (!region && !["managedidentity", "externalid", "privateendpoint"].includes(ent.id)) return err("Missing field(s): region");
+    try {
+      const c = await priceCatalogue(row as Record<string, unknown>, region || "global", hours, String(row.os ?? ""), currency);
+      if (c) return catalogueRow({ ...base, service: c.service, os: row.os ? os : "" }, c, qty, choice, discountPct);
+    } catch (e: any) {
+      return err(`Pricing lookup failed: ${e?.message ?? e}`);
+    }
+  }
+
   const missing = [!svc && "service", !sku && "arm_sku", !region && "region"].filter(Boolean);
   if (missing.length) return err(`Missing field(s): ${missing.join(", ")}`);
   if (!choice) return err(`Unknown pricing '${row.pricing}' (use ${PRICING_OPTIONS.join("/")})`);
@@ -110,13 +138,20 @@ export async function estimateRow(input: InputRow, currency = "GBP", discountPct
         extra = fee * hours;
         msg = `${qty} node(s) + ${tier} tier fee ${r2(extra)}/month`;
       }
-      return finalise({ ...base, message: msg }, o, choice, discountPct, extra);
+      const hourly = windows ? rates.windowsPayg : rates.linuxPayg;
+      return finalise({
+        ...base, message: msg,
+        matched_meters: `Virtual Machines / ${sku} / ${windows ? "Windows" : "Linux"} consumption${svc === "AKS" ? " + Azure Kubernetes Service tier fee" : ""}`,
+        unit_price: hourly ?? null, usage: `${qty} x ${hours} x 1 Hour`,
+        assumptions: `${svc === "AKS" ? "Linux nodes" : os}${ahb ? " with AHB" : ""}; ${hours} h/month`,
+      }, o, choice, discountPct, extra);
     }
     if (svc === "Disk") {
       const d = await getDiskMonthly(sku, region, currency);
       if (!d) return err(`Disk SKU '${sku}' not found in ${region}`);
       const o = { payg: d.retailPrice * qty };
-      return finalise({ ...base, message: `${d.productName} ${d.skuName}` }, o, choice === "PAYG" ? "PAYG" : choice, discountPct);
+      return finalise({ ...base, os: "", hours_per_month: null, message: `${d.productName} ${d.skuName}`,
+        matched_meters: `${d.productName} / ${d.skuName} / ${d.meterName}`, unit_price: d.retailPrice, usage: `${qty} x ${d.unitOfMeasure}`, assumptions: "" }, o, choice === "PAYG" ? "PAYG" : choice, discountPct);
     }
     const m = await getOther(sku, region, currency, serviceName || undefined, meter);
     if (!m.item && m.services.length > 1) {
@@ -127,11 +162,32 @@ export async function estimateRow(input: InputRow, currency = "GBP", discountPct
     if (!it) return err(`SKU '${sku}'${serviceName ? ` for service '${serviceName}'` : ""}${meter ? ` with meter '${meter}'` : ""} not found in ${region}`);
     const perHour = /hour/i.test(it.unitOfMeasure);
     const o = { payg: it.retailPrice * qty * (perHour ? hours : 1) };
-    return finalise({ ...base, status: "WARN", message: `Generic match: ${it.serviceName} / ${it.meterName} (${it.unitOfMeasure}) - verify` }, o, choice, discountPct);
+    return finalise({ ...base, status: "WARN", message: `Generic match: ${it.serviceName} / ${it.meterName} (${it.unitOfMeasure}) - verify`,
+      matched_meters: `${it.productName} / ${it.skuName} / ${it.meterName}`, unit_price: it.retailPrice,
+      usage: `${qty}${perHour ? ` x ${hours}` : ""} x ${it.unitOfMeasure}`, assumptions: "generic best-effort match; usage = quantity" }, o, choice, discountPct);
   } catch (e: any) {
     return err(`Pricing lookup failed: ${e?.message ?? e}`);
   }
 }
+
+function catalogueRow(base: Parameters<typeof finalise>[0], c: Awaited<ReturnType<typeof priceCatalogue>> & {}, qty: number, choice: PricingOption, discountPct: number): ResultRow {
+  const meters = c.components.map((x) => `${x.product} / ${x.sku} / ${x.meter}`).join("; ");
+  const usage = c.components.map((x) => `${x.label}: ${fmtQ(x.quantity)} x ${x.unit} @ ${x.unit_price}${x.tiered ? " (tiered)" : ""}`).join("; ");
+  const common = {
+    ...base, arm_sku: base.arm_sku || c.sku, hours_per_month: c.components.some((x) => /hour/i.test(x.unit)) ? base.hours_per_month : null, matched_meters: meters, usage: qty !== 1 && usage ? `${qty} x [${usage}]` : usage,
+    unit_price: c.components.find((x) => x.unit_price > 0)?.unit_price ?? c.components[0]?.unit_price ?? null,
+    assumptions: c.assumptions.join("; "), components: c.components,
+  };
+  if (c.status === "ERROR") return finalise({ ...common, status: "ERROR", message: c.error ?? "No price found" }, {}, "PAYG", 0);
+  const msg = [c.status === "WARN" ? "Uses default usage assumptions - review" : "", ...c.notes].filter(Boolean).join("; ");
+  if (c.status === "INFO") {
+    const r = finalise({ ...common, status: "INFO", message: msg }, { payg: 0 }, "PAYG", discountPct);
+    return { ...r, status: "INFO" };
+  }
+  const r = finalise({ ...common, status: c.status, message: msg }, { payg: (c.monthly ?? 0) * qty }, choice, discountPct);
+  return r;
+}
+const fmtQ = (n: number) => (Number.isInteger(n) ? String(n) : String(Math.round(n * 1000) / 1000));
 
 /**
  * Estimate many rows with bounded concurrency; identical lookups are deduped by the cache.
