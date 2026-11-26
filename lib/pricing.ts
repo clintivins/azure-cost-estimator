@@ -110,10 +110,41 @@ export async function getDiskMonthly(sku: string, region: string, currency = "GB
   return selectDiskMeter(items);
 }
 
-export async function getOther(sku: string, region: string, currency = "GBP"): Promise<PriceItem | undefined> {
+/** Score a candidate meter for a generic ("Other") lookup: prefer billable capacity meters over add-ons. */
+export function scoreOtherMeter(i: PriceItem, meter?: string, serviceName?: string): number {
+  if (i.type !== "Consumption" || /low priority|spot/i.test(i.meterName)) return -Infinity;
+  if (meter && !i.meterName.toLowerCase().includes(meter.toLowerCase())) return -Infinity;
+  let s = 0;
+  if (i.retailPrice > 0) s += 4;
+  if (/hour|month/i.test(i.unitOfMeasure)) s += 2;
+  if (/\b(unit|instance|vcore|node|messaging unit)\b/i.test(i.meterName)) s += 1;
+  if (serviceName && i.productName?.toLowerCase() === serviceName.toLowerCase()) s += 3;
+  if (/secondary|self-hosted|workspace|overage|backup|snapshot|data processed|software|renewal|rotation/i.test(i.meterName)) s -= 3;
+  return s;
+}
+/** Highest score wins; ties go to the cheaper meter so an ambiguous match never inflates the estimate. */
+export function selectOtherMeter(items: PriceItem[], meter?: string, serviceName?: string): PriceItem | undefined {
+  let best: PriceItem | undefined, bestScore = -Infinity;
+  for (const i of items) {
+    const sc = scoreOtherMeter(i, meter, serviceName);
+    if (sc === -Infinity) continue;
+    if (sc > bestScore || (sc === bestScore && best && i.retailPrice < best.retailPrice)) { best = i; bestScore = sc; }
+  }
+  return best;
+}
+
+export interface OtherMatch { item?: PriceItem; services: string[] }
+
+/** Best-effort lookup for any other service. serviceName (e.g. "API Management") and meter narrow the match. */
+export async function getOther(sku: string, region: string, currency = "GBP", serviceName?: string, meter?: string): Promise<OtherMatch> {
+  const svc = serviceName ? ` and serviceName eq '${esc(serviceName)}'` : "";
   const items = await queryPrices(
-    `armRegionName eq '${esc(region.toLowerCase())}' and (armSkuName eq '${esc(sku)}' or skuName eq '${esc(sku)}')`,
+    `armRegionName eq '${esc(region.toLowerCase())}'${svc} and (armSkuName eq '${esc(sku)}' or skuName eq '${esc(sku)}')`,
     currency,
   );
-  return items.find((i) => i.type === "Consumption" && !/low priority/i.test(i.meterName) && !/spot/i.test(i.meterName));
+  const usable = items.filter((i) => scoreOtherMeter(i, meter, serviceName) > -Infinity);
+  const services = [...new Set(usable.map((i) => i.serviceName))].sort();
+  // Without a service name a bare SKU such as "Standard" matches many unrelated services; refuse to guess.
+  if (!serviceName && services.length > 1) return { services };
+  return { item: selectOtherMeter(usable, meter, serviceName), services };
 }

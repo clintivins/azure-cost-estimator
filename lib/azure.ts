@@ -23,12 +23,40 @@ const cache = new Map<string, { at: number; p: Promise<PriceItem[]> }>();
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+/** Per-HTTP-call timeout. The Retail Prices API normally answers in 1-2 s; never let one call hang a function. */
+export const FETCH_TIMEOUT_MS = 10_000;
+const MAX_RETRIES = 3;
+const MAX_BACKOFF_MS = 4_000;
+/** Max concurrent outbound calls per instance, to stay under the Retail Prices API throttle. */
+const MAX_CONCURRENT = 4;
+
+let active = 0;
+const waiters: (() => void)[] = [];
+async function withSlot<T>(fn: () => Promise<T>): Promise<T> {
+  if (active >= MAX_CONCURRENT) await new Promise<void>((r) => waiters.push(r));
+  active++;
+  try { return await fn(); } finally { active--; waiters.shift()?.(); }
+}
+
+const retryable = (e: any) => e?.name === "TimeoutError" || e?.name === "AbortError" || e instanceof TypeError;
+
 async function getJson(url: string, attempt = 0): Promise<any> {
-  const res = await fetch(url, { headers: { accept: "application/json" }, next: { revalidate: 21600 } } as RequestInit);
+  let res: Response;
+  try {
+    res = await withSlot(() =>
+      fetch(url, { headers: { accept: "application/json" }, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS), next: { revalidate: 21600 } } as RequestInit));
+  } catch (e: any) {
+    if (!retryable(e) || attempt >= MAX_RETRIES) {
+      throw new Error(e?.name === "TimeoutError" ? `Azure prices API timed out after ${FETCH_TIMEOUT_MS / 1000}s` : `Azure prices API request failed: ${e?.message ?? e}`);
+    }
+    await sleep(Math.min(MAX_BACKOFF_MS, 500 * 2 ** attempt) + Math.random() * 250);
+    return getJson(url, attempt + 1);
+  }
   if (res.status === 429 || res.status >= 500) {
-    if (attempt >= 4) throw new Error(`Azure prices API ${res.status} after retries`);
+    if (attempt >= MAX_RETRIES) throw new Error(`Azure prices API ${res.status}${res.status === 429 ? " (rate limited)" : ""} after ${MAX_RETRIES} retries`);
     const ra = Number(res.headers.get("retry-after"));
-    await sleep(ra > 0 ? ra * 1000 : 500 * 2 ** attempt + Math.random() * 250);
+    // Cap Retry-After so a long throttle hint cannot push the request past the function time limit.
+    await sleep(Math.min(MAX_BACKOFF_MS, ra > 0 ? ra * 1000 : 500 * 2 ** attempt) + Math.random() * 250);
     return getJson(url, attempt + 1);
   }
   if (!res.ok) throw new Error(`Azure prices API ${res.status}: ${(await res.text()).slice(0, 200)}`);
@@ -36,7 +64,7 @@ async function getJson(url: string, attempt = 0): Promise<any> {
 }
 
 /** Query with an OData filter, following NextPageLink. Results are cached and in-flight requests deduped. */
-export function queryPrices(filter: string, currency = "GBP", maxPages = 20): Promise<PriceItem[]> {
+export function queryPrices(filter: string, currency = "GBP", maxPages = 10): Promise<PriceItem[]> {
   const key = `${currency}|${filter}`;
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < TTL_MS) return hit.p;
